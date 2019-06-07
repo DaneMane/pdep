@@ -45,11 +45,10 @@ antropomorfico::CriterioExito
 antropomorfico animal = elem "hablar" (habilidades animal) && (iq animal) > 60
 
 noTanCuerdo::CriterioExito
-noTanCuerdo animal = habilidadesPinkiescas animal > 2
-
+noTanCuerdo = (>2).length.filter habilidadPinkiesca.habilidades
+{- 
 habilidadesPinkiescas::Animal->Int
-habilidadesPinkiescas animal = (length.filter habilidadPinkiesca) (habilidades animal)
-
+habilidadesPinkiescas = ((>2).length.filter habilidadPinkiesca) habilidades -}
 habilidadPinkiesca::String->Bool
 habilidadPinkiesca habilidad = ((=="hacer").take 5) habilidad && (palabraPinkiesca.drop 6) habilidad
 
@@ -58,3 +57,20 @@ palabraPinkiesca palabra = length palabra <= 4 && ((length.filter esVocal) palab
 
 esVocal::Char->Bool
 esVocal letra = elem letra "aeiouAEIOU"  
+
+{-4-}
+
+data Experimento = Experimento { transformaciones::[Transformacion], criterio::CriterioExito}
+
+experimentoExitoso::Experimento->CriterioExito
+experimentoExitoso experimento animal = ((criterio experimento).(transformar animal).transformaciones) experimento
+
+transformar::Animal->[Transformacion]->Animal
+-- transformar animal transformaciones = foldr ($) animal transformaciones
+transformar = foldr ($) 
+
+
+-- reporte::[Animal]->[String]->Experimento->[a]
+-- reporte animales habilidades experimento = (sum iq.(tieneHabilidadesDadas habilidades).(transformar animal).transformaciones) experimento
+
+-- tieneHabilidadesDadas [habilidad:otrasHabilidades] animal = find habilidad (habilidades animal)???
