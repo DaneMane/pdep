@@ -2,7 +2,7 @@
 
 {- 1 -}
 --a)
-import Text.Show.Functions --Post Parcial
+import Text.Show.Functions --No lo puse en el parcial
 
 data Paciente = Paciente{
     nombre::String,
