@@ -35,6 +35,10 @@ object camion {
 		return cosas.all({ cosa => cosa.nivelPeligrosidad() < nivelMaxPeligrosidad})
 	}
 	
+	method tieneAlgoQuePesaEntre(min,max){
+		return cosas.any({ cosa => cosa.peso().between(min,max) })
+	}
+	
 }
 
 object knightRider{
@@ -94,6 +98,27 @@ object contenedorPortuario{
 	method pesoTotalCosas(){
 		return cosas.sum({ cosa => cosa.peso() })
 	}
+	
+	method nivelPeligrosidad(){
+		if(cosas.isEmpty()){
+			return 0
+		}
+		return self.nivelCosaMasPeligrosa()
+	}
+	
+	method nivelCosaMasPeligrosa(){
+		return cosas.max({ cosa => cosa.nivelPeligrosidad() }).nivelPeligrosidad()
+	}
+	
+}
+
+object embalajeDeSeguridad{
+	var property contenido = contenedorPortuario
+	
+	method peso() = contenido.peso()
+	
+	method nivelPeligrosidad() = contenido.nivelPeligrosidad()/2
+	
 }
 
 
